@@ -21,7 +21,7 @@ const setClickActionOnAll = action => R.map(setClickAction(action));
 const renderItems = ItemComponent => R.map(ItemComponent);
 
 // functional component that displays the given list of items
-// it pass the onClickItem function to each item when rendering them
+// it sets the onClickItem function to each item when rendering them
 // @see http://ramdajs.com/docs/#map
 const AccountItems = ({
   displayedItems,
