@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
+// class component that encapsulates the click action on a link for a given
+// account item.
 class ItemActionLink extends Component {
 
   static propTypes = {
@@ -35,6 +37,7 @@ class ItemActionLink extends Component {
   }
 }
 
+// functional component that displays the attributes of an account item.
 const AccountItem = ({
   id,
   title,

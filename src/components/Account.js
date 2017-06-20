@@ -5,24 +5,41 @@ import items from '../config/data';
 
 import AccountItems from './AccountItems';
 
-
+// Number -> ([a] -> Number)
+// return a function that will find the index of an item in a list using its id.
+// @see http://ramdajs.com/docs/#findIndex
 const findItemById = id => R.findIndex(R.propEq('id', id));
 
-const updateItem = item => ({ ...item, checked: !item.checked });
+// a -> a
+// switch the checked attribute of the given item.
+const updateItem = item => ({
+  ...item,
+  checked: !item.checked
+});
 
+// Number -> [a] -> [a]
+// update the item identified by the given id in the given list by switching the
+// value of its checked attribute.
+// @see http://ramdajs.com/docs/#adjust
 const updateAccountItem = R.curry((id, items) => R.adjust(
   updateItem,
   findItemById(id)(items),
   items));
 
+// this component is the main container
+// it displays the title of the app, the current filter and owns the methods
+// used to filter and update the items.
 class Account extends Component {
 
+  // initial state
   state = {
     items: [],
     displayedItems: [],
     title: 'toutes',
   }
 
+  // when the component is loaded we initialize the state by reading the items
+  // from the config file.
   componentWillMount() {
     this.setState((prevState, props) => {
       return {
@@ -32,6 +49,7 @@ class Account extends Component {
     });
   }
 
+  // update the state by filtering the checked items
   filterValidated = () => {
     this.setState((prevState, props) => {
       const currentItems = prevState.items;
@@ -43,6 +61,7 @@ class Account extends Component {
     });
   }
 
+  // update the state by filtering the unchecked items
   filterUnvalidated = () => {
     this.setState((prevState, props) => {
       const currentItems = prevState.items;
@@ -54,6 +73,7 @@ class Account extends Component {
     });
   }
 
+  // update the state by displaying all the items
   filterAll = () => {
     this.setState((prevState, props) => {
       const currentItems = prevState.items;
@@ -65,6 +85,7 @@ class Account extends Component {
     });
   }
 
+  // handle the action on the checked button of the given item.
   onClickItem = (itemId) => {
     this.setState((prevState, props) => {
       const currentItems = prevState.items;
