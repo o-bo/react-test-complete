@@ -5,6 +5,16 @@ import items from '../config/data';
 
 import AccountItems from './AccountItems';
 
+
+const findItemById = id => R.findIndex(R.propEq('id', id));
+
+const updateItem = item => ({ ...item, checked: !item.checked });
+
+const updateAccountItem = R.curry((id, items) => R.adjust(
+  updateItem,
+  findItemById(id)(items),
+  items));
+
 class Account extends Component {
 
   state = {
@@ -25,6 +35,7 @@ class Account extends Component {
   filterValidated = () => {
     this.setState((prevState, props) => {
       const currentItems = prevState.items;
+
       return {
         title: 'validées',
         displayedItems: R.filter(R.propEq('checked', true))(currentItems),
@@ -35,6 +46,7 @@ class Account extends Component {
   filterUnvalidated = () => {
     this.setState((prevState, props) => {
       const currentItems = prevState.items;
+
       return {
         title: 'invalidées',
         displayedItems: R.filter(R.propEq('checked', false))(currentItems),
@@ -45,6 +57,7 @@ class Account extends Component {
   filterAll = () => {
     this.setState((prevState, props) => {
       const currentItems = prevState.items;
+
       return {
         title: 'toutes',
         displayedItems: currentItems,
@@ -56,15 +69,11 @@ class Account extends Component {
     this.setState((prevState, props) => {
       const currentItems = prevState.items;
       const currentDisplayedItems = prevState.displayedItems;
+      const updateItem = updateAccountItem(itemId);
+
       return {
-        items: R.adjust(
-          it => ({ ...it, checked: !it.checked }),
-          R.findIndex(R.propEq('id', itemId))(currentItems),
-          currentItems),
-        displayedItems: R.adjust(
-          it => ({ ...it, checked: !it.checked }),
-          R.findIndex(R.propEq('id', itemId))(currentDisplayedItems),
-          currentDisplayedItems),
+        items: updateItem(currentItems),
+        displayedItems: updateItem(currentDisplayedItems),
       };
     });
   }
