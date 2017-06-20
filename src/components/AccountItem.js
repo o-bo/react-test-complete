@@ -33,7 +33,6 @@ class ItemActionLink extends Component {
       </a>
     );
   }
-
 }
 
 const AccountItem = ({

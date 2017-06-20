@@ -77,8 +77,6 @@ class Account extends Component {
                 <h6 className="card-subtitle">Dernières opérations : toutes</h6>
               </div>
               <div className="card-body">
-                <p>Afficher les opérations ici.</p>
-                <p>Charger le contenu du fichier <code>src/config/data.js</code></p>
                 <AccountItems
                   {...this.state}
                   onClickItem={this.onClickItem}
