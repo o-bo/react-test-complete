@@ -10,6 +10,7 @@ class Account extends Component {
   state = {
     items: [],
     displayedItems: [],
+    title: 'toutes',
   }
 
   componentWillMount() {
@@ -25,6 +26,7 @@ class Account extends Component {
     this.setState((prevState, props) => {
       const currentItems = prevState.items;
       return {
+        title: 'validées',
         displayedItems: R.filter(R.propEq('checked', true))(currentItems),
       };
     });
@@ -34,6 +36,7 @@ class Account extends Component {
     this.setState((prevState, props) => {
       const currentItems = prevState.items;
       return {
+        title: 'invalidées',
         displayedItems: R.filter(R.propEq('checked', false))(currentItems),
       };
     });
@@ -43,6 +46,7 @@ class Account extends Component {
     this.setState((prevState, props) => {
       const currentItems = prevState.items;
       return {
+        title: 'toutes',
         displayedItems: currentItems,
       };
     });
@@ -74,7 +78,7 @@ class Account extends Component {
             <div className="card">
               <div className="card-header">
                 <h4 className="card-title">Mon compte</h4>
-                <h6 className="card-subtitle">Dernières opérations : toutes</h6>
+                <h6 className="card-subtitle">{`Dernières opérations : ${this.state.title}`}</h6>
               </div>
               <div className="card-body">
                 <AccountItems
